@@ -74,3 +74,35 @@ Super Death runs entirely on your client, and a client cannot create entities or
 
 ### 1.9.1 - animated hotbar selector
 The Super Death hotbar's selection frame now animates, in the style of the "Animated Hotbar Selector" reference: it pulses in opacity (soft inner glow) and/or size (the outline breathes outward). Choose Off / Opacity / Size / Opacity + size in the F10 menu (default: both; saved as `hotbarAnimation`).
+
+### 1.10.0
+- **Ghost items**: boats, minecarts, spawn eggs, armor stands, item frames, paintings and end crystals can't exist on the client, so right clicking with one now places a visual-only ghost copy where you aim (a glowing, unpickable item drop; boats can be "placed" on the water surface). It uses up the local copy, lives only on your screen, and disappears when Second Chance ends.
+- Hotbar and XP bar restyled after the new reference picture: stone-grey frame with bevelled slots, green segmented XP bar with the level number.
+- Fixed the animated hotbar selector being offset from the selected slot (it was aligned to vanilla's frame instead of the mod's own hotbar).
+
+### 1.10.1
+Melee hits in Second Chance now use vanilla damage. The client never learns other entities' real attack damage (the attribute is not synced and equipment bonuses are applied only on the server), so every hit used to be the base value. Damage is now rebuilt from the attacker's base attack damage plus the attack-damage modifiers of the item in their hand (diamond sword 7, netherite axe 10, fist 1, ...), and damage from mobs (melee and their projectiles) scales with difficulty like vanilla (Easy about half, Hard 1.5x). Not included because the client cannot see them: enchantments, potion effects, critical hits and attack cooldown.
+
+### 1.10.2
+- Switching hotbar slots no longer restarts the attack cooldown, so the reload bar no longer pops up on every swap.
+- The reload bar now looks like vanilla's attack indicator (16x4, under the crosshair, outlined track with a glossy white fill).
+- Hardening: per-tick code and HUD drawing are wrapped so an unexpected error is logged once and freecam is left cleanly instead of crashing the game; mixins no longer require every injection point to exist, so a renamed method in a game update disables that feature instead of crashing at launch.
+
+### 1.10.3
+Restored `tickEnvironmentalDamage` (drowning and fire/lava damage), which the 1.10.1 melee-damage edit deleted by accident and which stopped 1.10.1 and 1.10.2 from compiling.
+
+### 1.11.0 - real crouching
+The ghost body now actually crouches: the pose is set directly, so in third person (F5) you see vanilla's crouch animation and the camera drops to the crouching eye height. The physics hitbox is vanilla's 1.5 blocks while crouched, so you can crouch through 1.5-high gaps, and if you let go of Shift under a low ceiling you stay crouched until there is room to stand.
+
+### 1.11.1
+The XP bar is vanilla's own again (bar, segments and level number); the custom green bar from 1.10.0 is removed.
+
+### 1.12.0 - client-side ghosts for every item
+- Right click places a ghost copy of the item where you aim, entirely on your client (nothing is sent to the server). Boats, rafts, minecarts, armor stands, end crystals and spawn eggs show as the real thing (a boat on the water, the mob from the egg); everything else, potions included, shows as an item drop. A white glow marks them as ghosts. Punch one to pick it back up. Blocks, water/lava buckets, food and tools keep their normal use, but Shift+right click places any item as a ghost.
+- An empty bucket now scoops up water or lava sources, including ones you placed yourself.
+
+### 1.12.1
+When your second chance runs out you are taken back to the death screen, now titled "You died, again." (it goes back to "You died!" once you respawn). Previously you just stayed a ghost with a short message.
+
+### 1.12.2
+The swing animation now always plays when you swing, even while the attack cooldown is recharging (before, swords and tools only animated once the reload bar was full). A swing restarts the cooldown, like in vanilla.
