@@ -69,7 +69,7 @@ Hunger and bubbles now show: the hotbar-hiding hook was cancelling the whole van
 ### 1.8.2
 The info panel speed now shows the real distance moved per tick, so it reads 0.00 when you stand still (before, a ghost read about 0.08 because gravity velocity was counted).
 
-### 1.9.0 - items in Super Death
+### 1.9.0 - items in Second Chance
 Super Death runs entirely on your client, and a client cannot create entities or run server-only logic, so not every item can work. What works: placing and mining blocks, pouring water/lava buckets, and eating food (hold right click for 32 ticks; refills Super Death hunger). What cannot: boats, minecarts, spawn eggs, projectiles (bows, snowballs, ender pearls...), armor stands, item frames, potions, milk, fish/mob buckets, bone meal, shears, brushes, hoe/axe/shovel right-click actions. Trying one shows a short message explaining why. A report of every item in the game (including modded ones) is written to `config/deathcam-items.txt` the first time you enter freecam. Errors in Super Death tool code are now caught and logged instead of being able to crash the game.
 
 ### 1.9.1 - animated hotbar selector
