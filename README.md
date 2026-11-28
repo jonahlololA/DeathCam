@@ -25,7 +25,7 @@ F10 > **Second Chance** (needs Reanimate) gives you a client-side extra life wit
 - Turning off Reanimate ends Second Chance. When the hearts run out it ends too.
 
 ## F10 menu
-Speed slider (0-5) and type box, Reanimate, Second Chance, smooth movement, freecam HUD, view lost items, and keybind buttons for the menu key and lost-items key (click, then press a key; Esc cancels). Settings save to `.minecraft/config/deathcam.properties`; keybinds are saved by Minecraft itself and also appear under Controls.
+Speed slider (0-5) and type box, Reanimate, Second Chance, smooth movement, freecam HUD, view lost items, and keybind buttons for the menu key, lost-items key and the key that returns you to the death screen (click, then press a key; Esc cancels). Settings save to `.minecraft/config/deathcam.properties`; keybinds are saved by Minecraft itself and also appear under Controls.
 
 ## Build
 JDK 25. `gradle wrapper --gradle-version 9.5.1` once, then `./gradlew build` (Windows: `.\gradlew.bat build`). The jar is in `build/libs`.
@@ -106,3 +106,51 @@ When your second chance runs out you are taken back to the death screen, now tit
 
 ### 1.12.2
 The swing animation now always plays when you swing, even while the attack cooldown is recharging (before, swords and tools only animated once the reload bar was full). A swing restarts the cooldown, like in vanilla.
+
+### 1.12.3
+Hotbar redrawn to match the new reference screenshot: near-black outline, light bevel around each slot, dark slate interior and a bigger bright selection square. The animated selector follows the new frame. (Minecraft 26.2 build.)
+
+### 1.12.4 - everything hurts
+Second Chance now takes damage from explosions (end crystals, TNT, creepers, fireballs, beds...) using vanilla's formula: it falls off with distance, blocks between you and the blast shield you, and it scales with difficulty. The server does not say how strong an explosion was, so the mod remembers nearby explosive entities (end crystal 6, TNT 4, creeper 3 or 6 if charged) and falls back to TNT strength for unknown sources. It also takes contact damage from cactus, wither roses, sweet berry bushes while moving, lit campfires (soul ones hit harder), magma blocks (crouching protects you), lightning and evoker fangs, plus void damage if you fall out of the world. Together with fall, drowning, fire/lava, starvation, projectiles and melee this covers most of what vanilla damage you can see on a client.
+
+### 1.12.5 - using items client-side
+- Punching a ghost end crystal now sets it off: a local power-6 explosion with particles and sound that hurts you (vanilla formula) and removes nearby breakable blocks on your screen.
+- Flint and steel or a fire charge on a TNT block lights it: a primed TNT is drawn and goes off after 4 seconds (power 4). On any other block they start a fire.
+- An ender pearl teleports you to the first solid block you look at (up to 48 blocks) for 5 damage.
+- A totem of undying in your main or off hand saves you once when the hearts run out (back to half a heart).
+- Shift+right click still places any of these as a ghost. All of it is client-side only.
+
+### 1.13.0 - most items usable client-side
+Right click (all client-side, nothing reaches the server):
+- **Throwables**: snowballs, eggs, splash/lingering potions, experience bottles (add XP), wind charges (launch you), tridents. They fly as the real entity and puff on impact.
+- **Bows and crossbows**: hold to draw, release to shoot an arrow from your inventory (vanilla power curve; crossbows need full loading).
+- **Potions and milk**: hold to drink. Healing, harming, regeneration, poison (never kills), swiftness, fire resistance and water breathing work; milk clears them. Effects are chosen by the potion's name.
+- **Armor**: right click to wear it (visible in third person) and it reduces melee, arrow, explosion and contact damage with vanilla's armor formula.
+- **Hoes, shovels, axes**: till, make paths, strip logs.
+- **Boats**: right click a ghost boat to sail it (W/S/A/D, Shift to get out).
+Still not possible: minecarts, fishing rods, shields, maps, books, spyglasses, brushes, shears, bone meal, and anything that needs other entities or the server.
+
+### 1.13.1
+Placed ghost end crystals no longer show the bedrock base underneath.
+
+### 1.13.2
+New "Hand" switch in the F10 menu (next to "HUD") hides the first-person hand and held item while in freecam.
+
+### 1.13.3
+New "Return to death screen" keybind button in the F10 menu. It starts out following the vanilla inventory key (E), exactly as before; click it and press another key to use that instead, or press the inventory key again to go back to following it. It also appears under Controls, and Reset keybinds restores it.
+
+### 1.13.8
+- Swapping hotbar items now plays the vanilla equip animation (old item lowers, new one rises).
+
+### 1.13.7
+- Second Chance: hits now knock you back (melee, arrows and other projectiles, explosions), vanilla style.
+
+### 1.13.6
+- Lava now sets you on fire for 15 seconds (fire blocks for 8): you keep taking burn damage after leaving it. Water or fire resistance puts you out.
+
+### 1.13.5
+- Removed the animated hotbar selector and its menu button (the normal selected-slot frame stays).
+
+### 1.13.4
+- **Bubbles move in every reanimate state:** the air supply is now simulated whenever you are reanimated (it used to run only during Second Chance) and fed to the ghost body, so vanilla's bubble bar depletes and refills. Without Second Chance running out of air does no damage.
+- **Lava is no longer swimmable:** you wade through it slowly (Space still lifts you a little), you cannot sprint-swim or dive in it, and it halves your fall distance, like vanilla. Water is unchanged.
